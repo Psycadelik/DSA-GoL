@@ -2,22 +2,23 @@ import sys
 
 
 def minimumSwaps(arr):
-    count = 0
+    # initialize the swap count
+    swap_count = 0
+    # create a dictionary that contains the value and it's index as key value pairs
+    index_dictionary = dict(zip(arr, range(1, len(arr)+1)))
+    
     # loop through the array
-    for i in range(0, len(arr)-1):
-        # check if current index value is greater than the next index value
-        if arr[i] != arr[i+1]:
-            # increase counter
-            count += 1
-            # assign the value to a temp variable
-            temp = arr[i]
-            # swap the value in the next index to current index
-            arr[i] = arr[i+1]
-            # assign the value stored in temp to the next index
-            arr[i+1] = temp
+    for i in range(1, len(arr)+1):
+        # check if the current value (i) is equal to the index in the dictionary
+        if index_dictionary[i] != i:
+            # swap the next value in the dictionary to the current value
+            index_dictionary[arr[i-1]] = index_dictionary[i]
+            arr[index_dictionary[i]-1] = arr[i-1]
+            swap_count += 1
+            
 
-    print("final count", count)        
-    return count
+    print("final count", swap_count)        
+    return swap_count
 
             
 def test(did_pass):
@@ -29,8 +30,8 @@ def test(did_pass):
 
 
 def test_suite():
-    test(minimumSwaps([2, 3, 4, 1, 5]) == 5)
-    test(minimumSwaps([4, 3, 1, 2]) == 4)
+    test(minimumSwaps([2, 3, 4, 1, 5]) == 3)
+    test(minimumSwaps([4, 3, 1, 2]) == 3)
 
 test_suite()
 
